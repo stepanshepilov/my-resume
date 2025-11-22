@@ -1,7 +1,8 @@
+import React from 'react';
 import { 
   Mail, Phone, MapPin, ExternalLink, 
   Award, Download, 
-  Brain, Database, Server, GitBranch, Terminal, Layers
+  Brain, Database, Server, GitBranch, Terminal, Layers, Sparkles, LayoutTemplate
 } from 'lucide-react';
 import { 
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer
@@ -9,24 +10,23 @@ import {
 
 // --- ДАННЫЕ ---
 
-// 1. Radar Chart (Профиль)
-// Уменьшили названия, чтобы они влезали
+// 1. Radar Chart
 const radarData = [
-  { subject: 'ML / AI', A: 95, fullMark: 100 },
+  { subject: 'ML / AI', A: 98, fullMark: 100 },
   { subject: 'Math', A: 90, fullMark: 100 },
-  { subject: 'Back', A: 75, fullMark: 100 },
+  { subject: 'Back', A: 80, fullMark: 100 }, // Подняли, так как был отдельный этап работы
   { subject: 'DevOps', A: 60, fullMark: 100 },
-  { subject: 'Front', A: 40, fullMark: 100 }, // React Basics
+  { subject: 'Front', A: 40, fullMark: 100 }, 
   { subject: 'Soft', A: 85, fullMark: 100 },
 ];
 
-// 2. Данные для линейных прогресс-баров (Вместо BarChart, который глючит с текстом)
+// 2. Skills List
 const skillsList = [
-  { name: 'Python Ecosystem (PyTorch, Pandas)', level: 95, color: 'bg-blue-600' },
-  { name: 'SQL (Postgres + pgvector) & NoSQL', level: 80, color: 'bg-indigo-600' },
-  { name: 'Backend (FastAPI, Kafka)', level: 70, color: 'bg-violet-600' },
-  { name: 'DevOps (Docker, CI/CD basics)', level: 60, color: 'bg-slate-600' },
-  { name: 'Frontend (React, Tailwind)', level: 40, color: 'bg-emerald-500' },
+  { name: 'LLM & Agents (LangChain, RAG)', level: 95, color: 'bg-blue-600' },
+  { name: 'Python (PyTorch, NetworkX)', level: 90, color: 'bg-indigo-600' },
+  { name: 'Backend (FastAPI, SQLAlchemy)', level: 80, color: 'bg-violet-600' }, // Усилили
+  { name: 'Data Eng (Kafka, Postgres)', level: 70, color: 'bg-slate-600' },
+  { name: 'DevOps (Docker)', level: 60, color: 'bg-slate-400' },
 ];
 
 function App() {
@@ -52,7 +52,6 @@ function App() {
         
         {/* --- HEADER --- */}
         <header className="flex justify-between items-start border-b-2 border-slate-100 pb-8 mb-8 relative">
-          {/* Декоративный фон для хедера */}
           <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
 
           <div className="relative z-10">
@@ -70,7 +69,7 @@ function App() {
             <ContactItem text="Tomsk, Russia" icon={<MapPin size={15} />} />
             <ContactItem text="+7 (913) 110-72-43" icon={<Phone size={15} />} href="tel:+79131107243" />
             <ContactItem text="stepanshepilovwork@gmail.com" icon={<Mail size={15} />} href="mailto:stepanshepilovwork@gmail.com" />
-            <ContactItem text="https://github.com/stepanshepilov" icon={<ExternalLink size={15} />} />
+            <ContactItem text="github.com/ssshepilov" icon={<ExternalLink size={15} />} />
           </div>
         </header>
 
@@ -84,9 +83,8 @@ function App() {
             <section>
               <SectionTitle title="Profile Summary" />
               <p className="text-[0.92rem] leading-relaxed text-slate-700 text-justify">
-                R&D-focused Data Scientist combining a strong academic background in <strong>Applied Math</strong> with modern engineering practices. 
-                Specializing in <strong>GNNs, LLMs, and Knowledge Graphs</strong>. 
-                Recently expanded skillset to include <strong>Backend (FastAPI, Kafka)</strong> and <strong>DevOps (Docker)</strong> to build end-to-end ML pipelines independently.
+                R&D-focused Data Scientist combining a strong academic background in <strong>Applied Math</strong> with solid engineering skills. 
+                Experienced in building end-to-end ML pipelines: from <strong>Mathematical Modeling</strong> and <strong>LLM Research</strong> to <strong>Backend Implementation</strong> (FastAPI, Kafka, DB Architecture).
               </p>
             </section>
 
@@ -107,19 +105,18 @@ function App() {
               </div>
             </section>
 
-             {/* Tech Stack Pills (Цветные) */}
+             {/* Tech Stack Pills */}
             <section>
               <SectionTitle title="Core Tech Stack" />
               <div className="flex flex-wrap gap-2">
+                <TechPill label="LLM Agents" type="ml" />
                 <TechPill label="PyTorch" type="ml" />
-                <TechPill label="LangChain" type="ml" />
-                <TechPill label="GraphRAG" type="ml" />
                 <TechPill label="FastAPI" type="backend" />
-                <TechPill label="Apache Kafka" type="backend" />
                 <TechPill label="PostgreSQL" type="backend" />
+                <TechPill label="Apache Kafka" type="backend" />
                 <TechPill label="Docker" type="devops" />
-                <TechPill label="React" type="frontend" />
-                <TechPill label="Git" type="devops" />
+                <TechPill label="LangChain" type="ml" />
+                <TechPill label="React Basics" type="frontend" />
               </div>
             </section>
           </div>
@@ -153,7 +150,7 @@ function App() {
                 </div>
              </div>
 
-             {/* CUSTOM SKILL BARS (Замена BarChart) */}
+             {/* CUSTOM SKILL BARS */}
              <div className="space-y-3">
                 {skillsList.map((skill) => (
                   <div key={skill.name}>
@@ -182,47 +179,66 @@ function App() {
           </div>
 
           <div className="relative ml-3 space-y-0">
-            {/* Линия таймлайна (Dashed для стиля) */}
             <div className="absolute top-3 bottom-0 left-[19px] w-[2px] bg-slate-200"></div>
 
-            {/* JOB 1 */}
+            {/* 1. CURRENT (PoCs) */}
             <TimelineBlock 
-              date="July 2025 — Present"
-              role="Junior Data Scientist"
+              date="Oct 2025 — Present"
+              role="Junior Data Scientist (R&D)"
               company="Gazpromneft-Digital Solutions"
-              tags={['Kafka', 'Docker', 'SQLAlchemy', 'PgVector']}
-              icon={<Terminal size={16} className="text-white" />}
+              tags={['LLM Agents', 'Optimization', 'Graph Copilot']}
+              icon={<Brain size={16} className="text-white" />}
               active
             >
-              <p className="mb-2">Leading the development of PoCs for intelligent system components.</p>
+              <p className="mb-2">Current focus: <strong>R&D & Hypothesis Testing</strong> (No DevOps/Backend tasks in this phase).</p>
               <ul className="list-disc ml-4 space-y-1.5 text-slate-600">
-                <li>Implemented multiple <strong>Proof-of-Concepts</strong> to validate R&D hypotheses.</li>
-                <li>Full migration of local services to <strong>Docker Compose</strong> environment.</li>
-                <li>Integrated <strong>Apache Kafka</strong> to enable asynchronous data streaming between services.</li>
-                <li>Designed efficient vector storage architecture using <strong>pgvector</strong>.</li>
+                <li>
+                  <strong>Optimization Pipeline:</strong> Building a pipeline to solve optimization tasks using LLM-based agents.
+                </li>
+                <li>
+                  <strong>Graph Copilot:</strong> Developing an assistant for natural language interaction with domain Knowledge Graphs.
+                </li>
+                <li>Validating new research hypotheses via rapid PoC development.</li>
               </ul>
             </TimelineBlock>
 
-            {/* JOB 2 */}
+            {/* 2. BACKEND & INFRA PHASE (The missing piece) */}
+            <TimelineBlock 
+              date="July 2025 — Sept 2025"
+              role="Junior Data Scientist (Backend & Infra)"
+              company="Gazpromneft-Digital Solutions"
+              tags={['SQLAlchemy', 'Kafka', 'Docker', 'PostgreSQL']}
+              icon={<Server size={16} className="text-white" />}
+            >
+               <p className="mb-2">Engineering phase: Building the scalable infrastructure for the intelligent system.</p>
+               <ul className="list-disc ml-4 space-y-1.5 text-slate-600">
+                <li>Designed DB architecture using <strong>SQLAlchemy</strong> ORM and <strong>pgvector</strong> for efficient storage.</li>
+                <li>Implemented <strong>Apache Kafka</strong> integrations for async inter-service communication.</li>
+                <li>Migrated services to a containerized environment using <strong>Docker Compose</strong>.</li>
+                <li>Wrote automated scripts for DB population from Google Sheets.</li>
+              </ul>
+            </TimelineBlock>
+
+            {/* 3. PROTOTYPE (Spring/Summer) */}
             <TimelineBlock 
               date="Apr 2025 — June 2025"
               role="Junior Data Scientist (Product)"
               company="Gazpromneft-Digital Solutions"
-              tags={['FastAPI', 'LLM', 'OCR', 'Algorithms']}
-              icon={<Brain size={16} className="text-white" />}
+              tags={['FastAPI', 'OCR', 'Algorithms', 'Prototype']}
+              icon={<LayoutTemplate size={16} className="text-white" />}
             >
-               <p className="mb-2">Focused on algorithmic core optimization.</p>
+               <p className="mb-2">Developed the first product prototype for automated graph generation.</p>
                <ul className="list-disc ml-4 space-y-1.5 text-slate-600">
                 <li>Developed metadata collection algorithm boosting GNN accuracy by <strong>20%</strong>.</li>
                 <li>
                   Built an end-to-end pipeline: 
                   <span className="italic text-slate-500"> RegExp/OCR Parsing → LLM Field Generation → Graph Node Creation</span>.
                 </li>
-                <li>Research: "LLM capabilities in generating symbolic calculation languages".</li>
+                <li>Implemented the core <strong>FastAPI</strong> service for the prototype.</li>
               </ul>
             </TimelineBlock>
 
-            {/* JOB 3 */}
+            {/* 4. TRAINEE */}
             <TimelineBlock 
               date="Dec 2024 — Apr 2025"
               role="Trainee Data Scientist"
@@ -233,14 +249,12 @@ function App() {
                <ul className="list-disc ml-4 space-y-1.5 text-slate-600">
                 <li>Built the entire <strong>GraphRAG</strong> (Knowledge Graph) codebase from zero.</li>
                 <li>Implemented text preprocessing pipelines and <strong>ChromaDB</strong> vector search.</li>
-                <li>Refactored legacy codebases and participated in R&D team meetups.</li>
               </ul>
             </TimelineBlock>
           </div>
         </section>
 
-        {/* --- ACHIEVEMENTS FOOTER --- */}
-        {/* break-inside-avoid гарантирует, что блок не разорвется при печати */}
+        {/* --- ACHIEVEMENTS --- */}
         <section className="mt-10 grid grid-cols-2 gap-6 break-inside-avoid">
             <AchievementCard 
               title="Hackathon Winner" 
@@ -286,8 +300,8 @@ const ContactItem = ({ text, icon, href }: { text: string, icon: any, href?: str
 const TechPill = ({ label, type }: { label: string, type: 'ml' | 'backend' | 'devops' | 'frontend' }) => {
   const styles = {
     ml: 'bg-blue-50 text-blue-700 border-blue-100',
-    backend: 'bg-violet-50 text-violet-700 border-violet-100',
-    devops: 'bg-slate-100 text-slate-700 border-slate-200',
+    backend: 'bg-violet-50 text-violet-700 border-violet-100', // Вернули цвет бэкенду, так как есть опыт
+    devops: 'bg-slate-100 text-slate-600 border-slate-200',
     frontend: 'bg-emerald-50 text-emerald-700 border-emerald-100'
   };
   
@@ -300,12 +314,9 @@ const TechPill = ({ label, type }: { label: string, type: 'ml' | 'backend' | 'de
 
 const TimelineBlock = ({ date, role, company, tags, children, icon, active = false }: any) => (
   <div className="relative pl-12 pb-10 break-inside-avoid">
-    {/* Иконка на линии */}
     <div className={`absolute left-0 top-1 w-10 h-10 rounded-xl flex items-center justify-center z-10 ring-4 ring-white shadow-sm transition-colors duration-300 ${active ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
       {icon}
     </div>
-    
-    {/* Контент */}
     <div className={`p-6 rounded-2xl border transition-all duration-300 ${active ? 'bg-blue-50/30 border-blue-100 shadow-sm' : 'bg-white border-slate-100'}`}>
       <div className="flex justify-between items-start mb-2">
         <div>
@@ -316,12 +327,9 @@ const TimelineBlock = ({ date, role, company, tags, children, icon, active = fal
           {date}
         </span>
       </div>
-      
       <div className="text-sm text-slate-700 mb-4 leading-relaxed">
         {children}
       </div>
-
-      {/* Тэги технологий */}
       <div className="flex flex-wrap gap-2 pt-3 border-t border-slate-100/50">
         {tags.map((tag: string) => (
           <span key={tag} className="text-[10px] font-bold text-slate-500 bg-white border border-slate-200 px-2 py-0.5 rounded shadow-sm">
@@ -345,7 +353,6 @@ const AchievementCard = ({ title, subtitle, desc }: any) => (
         <p className="text-xs text-slate-300 leading-relaxed opacity-90">{desc}</p>
       </div>
     </div>
-    {/* Декор фона */}
     <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-blue-600 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition duration-500"></div>
   </div>
 );
