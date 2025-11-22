@@ -1,30 +1,25 @@
-import React from 'react';
 import { 
   Mail, Phone, MapPin, ExternalLink, 
   Award, Download, 
-  Brain, Database, Server, GitBranch, Terminal, Layers, Sparkles, LayoutTemplate
+  Brain, Database, Server, GitBranch, Layers, LayoutTemplate, Zap
 } from 'lucide-react';
 import { 
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer
 } from 'recharts';
 
-// --- ДАННЫЕ ---
-
-// 1. Radar Chart
 const radarData = [
-  { subject: 'ML / AI', A: 98, fullMark: 100 },
-  { subject: 'Math', A: 90, fullMark: 100 },
-  { subject: 'Back', A: 80, fullMark: 100 }, // Подняли, так как был отдельный этап работы
-  { subject: 'DevOps', A: 60, fullMark: 100 },
+  { subject: 'ML / AI', A: 85, fullMark: 100 },
+  { subject: 'Math', A: 70, fullMark: 100 },
+  { subject: 'Back', A: 60, fullMark: 100 },
+  { subject: 'DevOps', A: 40, fullMark: 100 },
   { subject: 'Front', A: 40, fullMark: 100 }, 
   { subject: 'Soft', A: 85, fullMark: 100 },
 ];
 
-// 2. Skills List
 const skillsList = [
-  { name: 'LLM & Agents (LangChain, RAG)', level: 95, color: 'bg-blue-600' },
-  { name: 'Python (PyTorch, NetworkX)', level: 90, color: 'bg-indigo-600' },
-  { name: 'Backend (FastAPI, SQLAlchemy)', level: 80, color: 'bg-violet-600' }, // Усилили
+  { name: 'LLM & Agents (LangChain, RAG)', level: 80, color: 'bg-blue-600' },
+  { name: 'Python (PyTorch, NetworkX)', level: 70, color: 'bg-indigo-600' },
+  { name: 'Backend (FastAPI, SQLAlchemy)', level: 60, color: 'bg-violet-600' },
   { name: 'Data Eng (Kafka, Postgres)', level: 70, color: 'bg-slate-600' },
   { name: 'DevOps (Docker)', level: 60, color: 'bg-slate-400' },
 ];
@@ -37,7 +32,6 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-100 text-slate-800 font-sans pb-10 print:bg-white print:pb-0">
       
-      {/* Кнопка печати */}
       <div className="fixed bottom-5 right-5 no-print z-50">
         <button 
           onClick={handlePrint}
@@ -47,10 +41,8 @@ function App() {
         </button>
       </div>
 
-      {/* ЛИСТ А4 */}
       <div className="max-w-[210mm] mx-auto bg-white shadow-2xl p-10 md:p-12 print:shadow-none print:p-0 print:max-w-full min-h-[297mm]">
         
-        {/* --- HEADER --- */}
         <header className="flex justify-between items-start border-b-2 border-slate-100 pb-8 mb-8 relative">
           <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
 
@@ -73,13 +65,10 @@ function App() {
           </div>
         </header>
 
-        {/* --- MAIN GRID --- */}
         <div className="grid grid-cols-12 gap-10 mb-8">
           
-          {/* ЛЕВАЯ КОЛОНКА (Текст) */}
           <div className="col-span-7 space-y-8">
             
-            {/* Summary */}
             <section>
               <SectionTitle title="Profile Summary" />
               <p className="text-[0.92rem] leading-relaxed text-slate-700 text-justify">
@@ -88,10 +77,9 @@ function App() {
               </p>
             </section>
 
-            {/* Education */}
             <section>
-              <SectionTitle title="Education" />
-              <div className="flex items-start gap-3">
+              <SectionTitle title="Education & Training" />
+              <div className="flex items-start gap-3 mb-5">
                 <div className="mt-1 p-1.5 bg-blue-50 text-blue-600 rounded-lg">
                    <Layers size={20} />
                 </div>
@@ -103,9 +91,21 @@ function App() {
                   </div>
                 </div>
               </div>
+
+              <div className="flex items-start gap-3">
+                <div className="mt-1 p-1.5 bg-indigo-50 text-indigo-600 rounded-lg">
+                   <Zap size={20} />
+                </div>
+                <div>
+                  <div className="font-bold text-slate-900 text-lg">AIRI Summer School</div>
+                  <div className="text-sm text-slate-600 font-medium">Artificial Intelligence Research Institute (2025)</div>
+                  <div className="text-xs text-slate-500 mt-1 bg-indigo-50 inline-block px-2 py-1 rounded border border-indigo-100">
+                    Selected Participant • Intensive DL Track
+                  </div>
+                </div>
+              </div>
             </section>
 
-             {/* Tech Stack Pills */}
             <section>
               <SectionTitle title="Core Tech Stack" />
               <div className="flex flex-wrap gap-2">
@@ -121,10 +121,7 @@ function App() {
             </section>
           </div>
 
-          {/* ПРАВАЯ КОЛОНКА (Графики) */}
           <div className="col-span-5 flex flex-col gap-6">
-             
-             {/* RADAR CHART */}
              <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 relative overflow-hidden">
                 <div className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center mb-2">Skill Balance</div>
                 <div className="w-full h-52">
@@ -149,8 +146,6 @@ function App() {
                   </ResponsiveContainer>
                 </div>
              </div>
-
-             {/* CUSTOM SKILL BARS */}
              <div className="space-y-3">
                 {skillsList.map((skill) => (
                   <div key={skill.name}>
@@ -170,8 +165,6 @@ function App() {
 
           </div>
         </div>
-
-        {/* --- TIMELINE SECTION --- */}
         <section className="mt-10">
           <div className="flex items-center gap-3 border-b-2 border-slate-100 pb-3 mb-8">
              <GitBranch className="text-blue-600" size={24} />
@@ -180,8 +173,6 @@ function App() {
 
           <div className="relative ml-3 space-y-0">
             <div className="absolute top-3 bottom-0 left-[19px] w-[2px] bg-slate-200"></div>
-
-            {/* 1. CURRENT (PoCs) */}
             <TimelineBlock 
               date="Oct 2025 — Present"
               role="Junior Data Scientist (R&D)"
@@ -201,8 +192,6 @@ function App() {
                 <li>Validating new research hypotheses via rapid PoC development.</li>
               </ul>
             </TimelineBlock>
-
-            {/* 2. BACKEND & INFRA PHASE (The missing piece) */}
             <TimelineBlock 
               date="July 2025 — Sept 2025"
               role="Junior Data Scientist (Backend & Infra)"
@@ -218,8 +207,6 @@ function App() {
                 <li>Wrote automated scripts for DB population from Google Sheets.</li>
               </ul>
             </TimelineBlock>
-
-            {/* 3. PROTOTYPE (Spring/Summer) */}
             <TimelineBlock 
               date="Apr 2025 — June 2025"
               role="Junior Data Scientist (Product)"
@@ -237,8 +224,6 @@ function App() {
                 <li>Implemented the core <strong>FastAPI</strong> service for the prototype.</li>
               </ul>
             </TimelineBlock>
-
-            {/* 4. TRAINEE */}
             <TimelineBlock 
               date="Dec 2024 — Apr 2025"
               role="Trainee Data Scientist"
@@ -253,8 +238,6 @@ function App() {
             </TimelineBlock>
           </div>
         </section>
-
-        {/* --- ACHIEVEMENTS --- */}
         <section className="mt-10 grid grid-cols-2 gap-6 break-inside-avoid">
             <AchievementCard 
               title="Hackathon Winner" 
@@ -277,8 +260,6 @@ function App() {
   );
 }
 
-// --- КОМПОНЕНТЫ ---
-
 const SectionTitle = ({ title }: { title: string }) => (
   <h2 className="text-sm font-bold uppercase text-slate-400 tracking-widest mb-3 flex items-center gap-2">
     {title}
@@ -300,7 +281,7 @@ const ContactItem = ({ text, icon, href }: { text: string, icon: any, href?: str
 const TechPill = ({ label, type }: { label: string, type: 'ml' | 'backend' | 'devops' | 'frontend' }) => {
   const styles = {
     ml: 'bg-blue-50 text-blue-700 border-blue-100',
-    backend: 'bg-violet-50 text-violet-700 border-violet-100', // Вернули цвет бэкенду, так как есть опыт
+    backend: 'bg-violet-50 text-violet-700 border-violet-100',
     devops: 'bg-slate-100 text-slate-600 border-slate-200',
     frontend: 'bg-emerald-50 text-emerald-700 border-emerald-100'
   };
