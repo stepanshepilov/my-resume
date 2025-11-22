@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2563eb;
+  --color-dark: #0f172a;
+  --color-card: #1e293b;
+  --color-text: #f1f5f9;
+  --color-muted: #94a3b8;
+}
+
+@media print {
+  @page {
+    margin: 0;
+    size: A4;
+  }
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background-color: #fff !important;
+  }
+  .no-print {
+    display: none;
+  }
+}
